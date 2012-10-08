@@ -1,0 +1,13 @@
+##root@A 机子
+ssh-keygen -t rsa
+##公共密钥保存在 $HOME/.ssh/id_rsa.pub
+scp $HOME/.ssh/id_rsa.pub root@b:$HOME/.ssh/authorized_keys
+
+##Copy big.tar.gz TO B From A
+scp /home/big.tar.gz root@b:/home
+
+##Copy big.tar.gz TO A From B
+scp -p root@b:/home/big.tar.gz /home
+
+##copy B上的目录 /home/user,到本地 /home/user/tmp
+scp -r root@B:/home/user /home/user/tmp
