@@ -1,0 +1,31 @@
+###ArchLinux安装###
+#cfdisk /dev/sda
+
+# mkfs.ext4 /dev/sda1
+# mkfs.ext4 /dev/sda3
+
+#mkswap /dev/sda2 && swapon /dev/sda2
+#lsblk /dev/sda
+#####编辑mirrorslist####
+
+# pacstrap /mnt base base-devel
+
+#生成fstab
+genfstab -p /mnt >> /mnt/etc/fstab
+
+####ChRoot 到新系统
+#arch-chroot /mnt
+
+#vi /etc/locale.gen
+
+en_US.UTF8 UTF-8
+zh_CN.UTF8 UTF-8
+zh_CN.GBK GBK
+zh_CN.GB2312 GB2312
+zh_CN.GB18030 GB18030
+
+#locale-gen
+
+#vi /etc/locale.conf
+LANG=zh_CN.UTF-8
+
