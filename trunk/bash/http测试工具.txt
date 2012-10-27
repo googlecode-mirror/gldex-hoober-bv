@@ -1,0 +1,18 @@
+##http##
+ab
+缺点只能一个次一个url;
+
+http_load
+
+LoadRunner
+
+##mysql##
+mysqlslap
+
+sysbench
+
+内置测试函数
+benchmark();
+
+显示运行时间长于1s检查行超过1000的日志
+tail -f mysql-slow.log | mysql_show_log_filter -T 1 -R 1000

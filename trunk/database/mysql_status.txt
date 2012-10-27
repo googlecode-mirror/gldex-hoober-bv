@@ -1,0 +1,13 @@
+show status几个有用的变量
+服务器与客户端来往流量
+Bytes_received 和 Bytes_send
+正在执行的命令
+Com_*
+查询正在执行的临时表
+Created_*
+引擎操作
+Handler
+联接执行计划
+Select_*
+Sort_*
+几种排序信息
