@@ -1,0 +1,28 @@
+yum -y install subversion
+mkdir -p /home/svn/chinae
+svnadmin create /home/svn/chinae
+cd /home/svn/chinae/conf
+vi svnserve.conf
+    anon-access = none
+    auth-access = write
+    password-db = passwd
+    authz-db = authz
+vi passwd
+	[users]
+	admin=123
+	admin2=123
+	vi authz
+[groups]
+	developers = admin, admin2
+	[/]
+	admin = rw
+	admin2 = rw
+	* =
+svnserve -d -r /home/svn/
+svn import -m "chinae" /home/code/fluxbb/  svn://127.0.0.1/chinae/
+
+¹³×Ó¸±±¾
+svn checkout svn://127.0.0.1/chinae
+
+vi /etc/rc.d/rc.local
+	/usr/bin/svnserve -d -r /home/svn/

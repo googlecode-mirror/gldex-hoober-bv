@@ -1,0 +1,2 @@
+1.查看key_buffer_size剩余值
+show global status like '%Key_blocks_unused%';
