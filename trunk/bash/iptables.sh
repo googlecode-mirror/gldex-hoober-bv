@@ -13,4 +13,7 @@
 /sbin/iptables -A INPUT -p tcp --dport 80 -j ACCEPT
 /sbin/iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
 /sbin/iptables -A INPUT -p icmp -j ACCEPT
+/sbin/iptables -A INPUT -f -m limit --limit 150/sec --limit-burst 150 -j ACCEPT
+/sbin/iptables -A INPUT -p icmp --icmp-type echo-request -m limit --limit 1/s --limit-burst 10 -j ACCEPT
+/sbin/iptables -A INPUT -p tcp -m tcp --tcp-flags SYN,RST,ACK SYN -m limit --limit 25/sec --limit-burst 250 -j ACCEPT
 service iptables save
