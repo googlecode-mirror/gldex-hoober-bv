@@ -1,0 +1,30 @@
+#mysql#
+yum install cmake ncurses-devel libxml
+mkdir /home/mysql/data
+groupadd mysql
+useradd -g mysql mysql -s /sbin/nologin
+
+cmake -DCMAKE_INSTALL_PREFIX=/usr/local/mysql \
+-DMYSQL_UNIX_ADDR=/tmp/mysql.sock \
+-DDEFAULT_CHARSET=utf8 \
+-DDEFAULT_COLLATION=utf8_general_ci \
+-DWITH_EXTRA_CHARSETS:STRING=utf8 \
+-DWITH_MYISAM_STORAGE_ENGINE=1 \
+-DWITH_INNOBASE_STORAGE_ENGINE=1 \
+-DWITH_READLINE=1 \
+-DENABLED_LOCAL_INFILE=1 \
+-DMYSQL_DATADIR=/home/mysql/data \
+-DSYSCONFDIR=/etc
+
+make
+make install
+
+chmod +w /usr/local/mysql
+chown -R mysql.mysql /usr/local/mysql
+ln -s /usr/local/mysql/lib/libmysqlclient.so.16 /usr/lib/libmysqlclient.so.16
+mkdir -p /home/mysql/
+mkdir -p /home/mysql/data/
+mkdir -p /home/mysql/log/
+chown -R mysql.mysql /home/mysql/
+cd support-files/
+cp my-large.cnf /etc/my.cnf
