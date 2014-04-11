@@ -55,11 +55,25 @@ curl -sS https://getcomposer.org/installer | php
 mv composer.phar /usr/local/bin/composer
 
 ###编译nginx###
+###如果要加入lua##
+需要三个组件
+1. luajit
+2.ngx_devel_kit
+3.nginx_lua_module
+
+###加入环境变量##
+vim /etc/profile
+export LUAJIT_LIB=/usr/local/lib
+export LUAJIT_INC=/usr/local/include/luajit-2.0
+source /etc/profile
+chown -R  www.www /usr/local/include/luajit-2.0
+ln -s /usr/local/lib/libluajit-5.1.so.2 /lib64/libluajit-5.1.so.2
+###
 ./configure \
-  --prefix=/usr/usr/local/nginx \
+  --prefix=/usr/local/nginx \
   --with-md5=/usr/lib64 \
   --with-sha1=/usr/lib64 \
-  --with-pcre=/home/soft/pcre \
+  --with-pcre=/home/liuwh/software/pcre \
   --user=www \
   --group=www \
   --with-http_ssl_module \
@@ -67,5 +81,7 @@ mv composer.phar /usr/local/bin/composer
   --with-http_gzip_static_module \
   --with-http_realip_module \
   --http-client-body-temp-path=/var/tmp/nginx/client/ \
-  --http-proxy-temp-path=/var/tmp/nginx/proxy/
+  --http-proxy-temp-path=/var/tmp/nginx/proxy/ \
+  --add-module=/home/liuwh/software/ngx_devel_kit \
+  --add-module=/home/liuwh/software/lua-nginx-module  \
   make && make install
