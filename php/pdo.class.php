@@ -1,6 +1,4 @@
-<?php
-class DatabaseInit        
-{       
+<?php class DatabaseInit {       
     private static $instance;       
     public static $dsn = 'mysql:host=localhost;port=3306;dbname=message';       
     public static $dbuser = 'root';       
