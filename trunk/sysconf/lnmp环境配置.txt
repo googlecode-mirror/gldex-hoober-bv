@@ -1,0 +1,71 @@
+##编译mysql###
+yum install cmake bison ncurses-devel
+groupadd mysql
+useradd -g mysql mysql -s /sbin/nologin
+
+cmake -DCMAKE_INSTALL_PREFIX=/usr/local/mysql \
+-DMYSQL_UNIX_ADDR=/tmp/mysql.sock \
+-DDEFAULT_CHARSET=utf8 \
+-DDEFAULT_COLLATION=utf8_general_ci \
+-DWITH_EXTRA_CHARSETS:STRING=utf8 \
+-DWITH_MYISAM_STORAGE_ENGINE=1 \
+-DWITH_INNOBASE_STORAGE_ENGINE=1 \
+-DWITH_READLINE=1 \
+-DENABLED_LOCAL_INFILE=1 \
+-DMYSQL_DATADIR=/home/mysql/data
+
+make
+make install
+
+chmod +w /usr/local/mysql
+chown -R mysql:mysql /usr/local/mysql
+ln -s /usr/local/mysql/lib/libmysqlclient.so.16 /usr/lib/libmysqlclient.so.16
+
+mkdir -p /home/mysql/
+mkdir -p /home/mysql/data/
+mkdir -p /home/mysql/log/
+chown -R mysql:mysql /home/mysql/
+cd support-files/
+cp my-large.cnf /etc/my.cnf
+
+/usr/local/mysql/scripts/mysql_install_db \
+--defaults-file=/etc/my.cnf \
+--basedir=/usr/local/mysql \
+--datadir=/home/mysql/data \
+--user=mysql
+
+cp mysql.server /etc/init.d/mysqld
+chmod +x /etc/init.d/mysqld
+vim /etc/init.d/mysqld
+basedir=/usr/local/mysql
+datadir=/home/mysql/data
+chkconfig --add mysqld
+chkconfig --level 345 mysqld on
+
+vim /etc/profile
+export PATH=$PATH:/usr/local/mysql/bin
+
+###编译php###
+./configure --prefix=/usr/local/php5 --with-mysql=mysqlnd --with-mysqli=mysqlnd --enable-pdo --with-pdo-sqlite --with-pdo-mysql --enable-zip  --enable-fastcgi --with-libxml-dir=/usr/local/libxml2 --with-gd --with-freetype-dir=/usr/local/freetype --with-zlib-dir=/usr/local/zlib --with-curl=/usr/local/curl --with-png-dir=/usr/local/lib --with-jpeg-dir=/usr/local/jpeg6 --enable-bcmath --with-xsl=/usr/local/libxslt --with-mysql-sock=/tmp --disable-debug --with-config-file-path=/usr/local/php5/etc --with-mcrypt --with-mhash --with-openssl --enable-mbstring --enable-fpm --enable-opcache
+
+vim /etc/profile
+export PATH=$PATH:/usr/local/php5/bin
+###安装php扩展###
+curl -sS https://getcomposer.org/installer | php
+mv composer.phar /usr/local/bin/composer
+
+###编译nginx###
+./configure \
+  --prefix=/usr/usr/local/nginx \
+  --with-md5=/usr/lib64 \
+  --with-sha1=/usr/lib64 \
+  --with-pcre=/home/soft/pcre \
+  --user=www \
+  --group=www \
+  --with-http_ssl_module \
+  --with-http_stub_status_module \
+  --with-http_gzip_static_module \
+  --with-http_realip_module \
+  --http-client-body-temp-path=/var/tmp/nginx/client/ \
+  --http-proxy-temp-path=/var/tmp/nginx/proxy/
+  make && make install
