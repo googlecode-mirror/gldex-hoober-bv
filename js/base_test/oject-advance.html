@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Js基础</title>
+</head>
+<body>
+<script type="text/javascript">
+	var student = {
+		_year : 2006,
+		edition : 1
+	};
+	Object.defineProperty(student , "year" , {
+		get : function(){
+			return this._year;
+		} ,
+		set : function(newYear){
+			if (newYear > 2006){
+				this._year = newYear ;
+				this.edition += newYear - 2006;
+			}
+		}
+	});
+	student.year = 2049;
+	console.log(student.edition);
+</script>
+</body>
+</html>
