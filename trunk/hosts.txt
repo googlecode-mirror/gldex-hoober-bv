@@ -21,7 +21,6 @@
 127.0.0.1		www.farigo.com
 127.0.0.1		phpMyAdmin
 127.0.0.1		drupal
-127.0.0.1		192.168.1.110
 127.0.0.1		test.com
 127.0.0.1		test2.com
 127.0.0.1		yii.lwh
