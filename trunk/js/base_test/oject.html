@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Js基础</title>
+</head>
+<body>
+<script type="text/javascript">
+	var strNum = 2 , strNum2 = strNum;
+	strNum = 110;
+	//console.log(strNum , strNum2);
+	var objNum ={};
+	objNum.val = 1 ;
+	var objNum2 = objNum;
+	objNum.val = 110;
+	var testArr = [3, 6, 7];
+	console.log(testArr.toString());
+	var everyFunc = testArr.every(function(item,index,array){
+		return  (item > 6);
+	});
+	console.log(everyFunc);
+	var someFunc = testArr.some(function(item,index,array){
+		return  (item > 6);
+	});
+	console.log(someFunc);
+	var filterFunc = testArr.filter(function(item,index,array){
+		return  (item > 6);
+	});
+	console.log(filterFunc);
+	var mapFunc = testArr.map(function(item,index,array){
+		return  (item-3);
+	});
+	//console.log(mapFunc);
+	//var name = "The Window";
+var object = {
+　　name : "My Object",
+　　getNameFunc : function(){
+　　　return function(){
+　　　　　return this.name;
+　　　};
+　　}
+	};
+object.name = "Other Object";
+alert(object.getNameFunc()());
+
+</script>
+</body>
+</html>
